@@ -2,7 +2,7 @@
 
 CREATE TABLE animals
 (
-    id integer NOT NULL,
+    id integer NOT NULL IDENTITY(1,1),
     name text NOT NULL,
     date_of_birth date NOT NULL,
     escape_attemps integer,
@@ -10,3 +10,5 @@ CREATE TABLE animals
     weight_kg numeric NOT NULL,
     PRIMARY KEY (id)
 );
+
+ALTER TABLE animals ADD COLUMN species text;
