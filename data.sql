@@ -1,6 +1,6 @@
 /* Populate database with sample data. */
 
-INSERT INTO public.animals(
+INSERT INTO animals(
 	id, name, date_of_birth, escape_attempts, neutered, weight_kg)
 	VALUES 
   (1, 'Agumon', '03-02-2020', 0, true, 10.23 );
@@ -40,3 +40,25 @@ UPDATE animals  SET weight_kg = weight_kg * -1;
 ROLLBACK TO SP1;
 UPDATE animals SET weight_kg = weight_kg * -1 WHERE weight_kg < 0;
 COMMIT;
+
+INSERT INTO owners (full_name, age)
+VALUES
+('Sam Smith', 34);
+('Jennifer Orwell', 19);
+('Bob',45);
+('Melody Pond', 77);
+('Dean Winchester', 14);
+('Jodie Whittaker',38);
+
+INSERT INTO species(name)
+VALUES
+('Pokemon');
+('Digimon');
+
+UPDATE animals SET species_id =(SELECT id FROM species WHERE name = 'Digimon') WHERE name LIKE '%mon%';
+UPDATE animals SET species_id =(SELECT id FROM species WHERE name = 'Pokemon') WHERE species_id IS NULL;
+UPDATE animals SET owner_id = (SELECT id FROM owners WHERE name = 'Sam Smith') WHERE name = 'Agumon'
+UPDATE animals SET owner_id = (SELECT id FROM owners WHERE name = 'Jennifer Orwell') WHERE name = 'Gabumon' OR 'Pikachu'
+UPDATE animals SET owner_id = (SELECT id FROM owners WHERE full_name = 'Bob') WHERE name = 'Devimon' or name = 'Plantmon';
+UPDATE animals SET owner_id = (SELECT id FROM owners WHERE full_name = 'Melody Pond') WHERE name = 'Charmander' or name = 'Squirtle' or name = 'Blossom';
+UPDATE animals SET owner_id = (SELECT id FROM owners WHERE full_name = 'Dean Winchester') WHERE name = 'Angemon' or name = 'Boarmon';
